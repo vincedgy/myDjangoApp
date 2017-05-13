@@ -12,6 +12,8 @@ Discover Django framework and build an MVP app with no fancy integration for now
 
 ## Deployement on AWS Beanstalk
 
+`` pip install --upgrade --user awsebcli
+
 Reference :
 
 * [http://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create-deploy-python-django.html](http://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create-deploy-python-django.html)
