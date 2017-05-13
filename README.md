@@ -22,13 +22,15 @@ pip install --upgrade --user awsebcli
 alias eb='~/Library/Python/2.7/bin/eb'
 export eb
 
-eb init -p python2.7 myDjangoApp
+eb init -p python2.7 myDjangoApp –region eu-west-1
 
 aws elasticbeanstalk describe-applications
 
 eb create django-env
 
 aws elasticbeanstalk describe-environments
+
+eb deploy
 ```
 
 Reference :
