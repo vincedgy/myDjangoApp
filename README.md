@@ -1,5 +1,7 @@
 # myDjangoApp
 
+Python 2.7 (for now !)
+
 ## Objectives
 
 Discover Django framework and build an MVP app with no fancy integration for now.
@@ -12,7 +14,22 @@ Discover Django framework and build an MVP app with no fancy integration for now
 
 ## Deployement on AWS Beanstalk
 
-`` pip install --upgrade --user awsebcli
+### Install AWS ElasticBeanstalk CLI
+
+```
+pip install --upgrade --user awsebcli
+
+alias eb='~/Library/Python/2.7/bin/eb'
+export eb
+
+eb init -p python2.7 myDjangoApp
+
+aws elasticbeanstalk describe-applications
+
+eb create django-env
+
+aws elasticbeanstalk describe-environments
+```
 
 Reference :
 
