@@ -4,5 +4,6 @@ venv*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 *.pyc
-!.idea
+.idea
+.idea/*
 chromedriver
