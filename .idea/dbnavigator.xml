@@ -31,7 +31,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="22575edb-d0b5-408e-af75-561557cbf09d">
-      <console name="Connection" type="STANDARD"><![CDATA[select * from django_migrations;]]></console>
+      <console name="Connection" type="STANDARD"><![CDATA[select * from polls_choice;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
