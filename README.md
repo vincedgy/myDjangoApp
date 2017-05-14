@@ -1,4 +1,4 @@
-# myDjangoApp
+# myDjangoApp :metal:
 
 Python 2.7 & 3.6 (managed through virtualenv)
 
@@ -39,5 +39,5 @@ eb deploy
 * Step by step tutorial : <br> [http://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create-deploy-python-django.html](http://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create-deploy-python-django.html)
 
 #### Tooling
-* BPython : incredible useful python shell interpretor <br>
+* BPython : *incredible* useful python shell interpretor <br>
 [https://bpython-interpreter.org/](https://bpython-interpreter.org/)
