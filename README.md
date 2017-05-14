@@ -39,5 +39,9 @@ eb deploy
 * Step by step tutorial : <br> [http://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create-deploy-python-django.html](http://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create-deploy-python-django.html)
 
 #### Tooling
+
 * BPython : *incredible* useful python shell interpretor <br>
 [https://bpython-interpreter.org/](https://bpython-interpreter.org/)
+
+* selenium : automatic testing with ChromeDriver
+[https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip](https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip)
