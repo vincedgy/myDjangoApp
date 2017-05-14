@@ -44,4 +44,5 @@ eb deploy
 [https://bpython-interpreter.org/](https://bpython-interpreter.org/)
 
 * selenium : automatic testing with ChromeDriver
-[https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip](https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip)
+    - [https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip](https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip)
+    - [https://sites.google.com/a/chromium.org/chromedriver/getting-started](https://sites.google.com/a/chromium.org/chromedriver/getting-started)
