@@ -22,7 +22,7 @@ pip install --upgrade --user awsebcli
 alias eb='~/Library/Python/2.7/bin/eb'
 export eb
 
-eb init -p python2.7 myDjangoApp –region eu-west-1
+eb init -p python2.7 myDjangoApp -region eu-west-1
 
 aws elasticbeanstalk describe-applications
 
@@ -46,3 +46,9 @@ eb deploy
 * selenium : automatic testing with ChromeDriver
     - [https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip](https://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip)
     - [https://sites.google.com/a/chromium.org/chromedriver/getting-started](https://sites.google.com/a/chromium.org/chromedriver/getting-started)
+    
+##### CI/CD with Jenkins
+
+- Jenkins installation<br>
+visit [https://jenkins.io/](https://jenkins.io/), you gonna need a local installation 
+
