@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+        stages {
+
+            stage('Preparation') {
+           sh '''
+            cd /Users/vincent/Projects/myDjangoApp
+            /usr/local/bin/virtualenv -q -p /usr/local/bin/python3 mydjangoapp-qa
+           '''
+       }
+       stage('Requirements') {
+            sh '''
+            cd /Users/vincent/Projects/myDjangoApp
+            source ./mydjangoapp-qa/bin/activate
+            pip install -r requirements.txt
+            deactivate
+            '''
+       }
+       stage('Build') {
+            sh '''
+            cd /Users/vincent/Projects/myDjangoApp
+            source ./mydjangoapp-qa/bin/activate
+            python manage.py makemigrations
+            python manage.py migrate                   # Apply database migrations
+            #python manage.py compilemessages          # Create translation files
+            #python manage.py collectstatic --noinput  # Collect static files
+            deactivate
+            '''
+       }
+       stage('Tests Polls') {
+            sh '''
+            cd /Users/vincent/Projects/myDjangoApp
+            source ./mydjangoapp-qa/bin/activate
+            python manage.py test --noinput polls     # Run the tests
+            deactivate
+            '''
+       }
+        stage('Tests FrontEnd') {
+            sh '''
+            cd /Users/vincent/Projects/myDjangoApp
+            source ./mydjangoapp-qa/bin/activate
+
+            for PID in $(ps -eaf | grep chromedriver | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do echo $PID; done
+
+            ./chromedriver &
+            CHROME_DRIVER_PID=$!
+
+            python ./WebTest.py
+
+            deactivate
+            '''
+       }
+
+
+    }
+}

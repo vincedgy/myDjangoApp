@@ -5,6 +5,3 @@ venv*
 !.elasticbeanstalk/*.global.yml
 *.pyc
 .idea
-.idea/*
-chromedriver
-mydjangoapp
