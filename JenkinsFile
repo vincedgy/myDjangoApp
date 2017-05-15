@@ -9,63 +9,76 @@ pipeline {
     }
 
     stages {
-
         stage('Preparation') {
-            sh '''
-            cd $BASEDIR
-            /usr/local/bin/virtualenv -q -p /usr/local/bin/python3 $VENV_NAME
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                /usr/local/bin/virtualenv -q -p /usr/local/bin/python3 $VENV_NAME
+                '''
+            }
         }
         stage('Requirements') {
-            sh '''
-            cd $BASEDIR
-            source ./$VENV_NAME/bin/activate
-            pip install -r requirements.txt
-            deactivate
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                pip install -r requirements.txt
+                deactivate
+                '''
+            }
         }
         stage('Build') {
-            sh '''
-            cd $BASEDIR
-            source ./$VENV_NAME/bin/activate
-            python manage.py makemigrations
-            python manage.py migrate                   # Apply database migrations
-            #python manage.py compilemessages          # Create translation files
-            #python manage.py collectstatic --noinput  # Collect static files
-            deactivate
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                python manage.py makemigrations
+                python manage.py migrate                   # Apply database migrations
+                #python manage.py compilemessages          # Create translation files
+                #python manage.py collectstatic --noinput  # Collect static files
+                deactivate
+                '''
+            }
         }
         stage('Tests Polls') {
-            sh '''
-            cd $BASEDIR
-            source ./$VENV_NAME/bin/activate
-            python manage.py test --noinput polls     # Run the tests
-            deactivate
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                python manage.py test --noinput polls     # Run the tests
+                deactivate
+                '''
+            }
         }
         stage('Run app') {
-            sh '''
-            cd $BASEDIR
-            source ./$VENV_NAME/bin/activate
-            python manage.py runserver &
-            deactivate
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                python manage.py runserver &
+                deactivate
+                '''
+            }
         }
         stage('Tests FrontEnd') {
-            sh '''
-            cd $BASEDIR
-            source ./$VENV_NAME/bin/activate
-            nosetests ./$FE_TEST_SCRIPT
-            deactivate
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                nosetests ./$FE_TEST_SCRIPT
+                deactivate
+                '''
+            }
         }
         stage('Stop app') {
-            sh '''
-            cd $BASEDIR
-            source ./$VENV_NAME/bin/activate
-            for PID in $(ps -eaf | grep 'runserver' | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
-            deactivate
-            '''
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                for PID in $(ps -eaf | grep 'runserver' | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
+                deactivate
+                '''
+            }
         }
     }
 }
