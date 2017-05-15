@@ -40,22 +40,23 @@ pipeline {
                 '''
             }
         }
+
+        stage('Run app with coverage') {
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                coverage run manage.py runserver &
+                deactivate
+                '''
+            }
+        }
         stage('Tests Polls') {
             steps {
                 sh '''
                 cd $BASEDIR
                 source ./$VENV_NAME/bin/activate
-                python manage.py test --noinput polls     # Run the tests
-                deactivate
-                '''
-            }
-        }
-        stage('Run app') {
-            steps {
-                sh '''
-                cd $BASEDIR
-                source ./$VENV_NAME/bin/activate
-                python manage.py runserver &
+                python manage.py test --noinput polls     # Run the unittests
                 deactivate
                 '''
             }
@@ -76,6 +77,16 @@ pipeline {
                 cd $BASEDIR
                 source ./$VENV_NAME/bin/activate
                 for PID in $(ps -eaf | grep 'runserver' | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
+                deactivate
+                '''
+            }
+        }
+        stage('Report') {
+            steps {
+                sh '''
+                cd $BASEDIR
+                source ./$VENV_NAME/bin/activate
+                coverage report
                 deactivate
                 '''
             }
