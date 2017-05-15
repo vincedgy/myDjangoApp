@@ -8,15 +8,13 @@ pipeline {
         FE_TEST_SCRIPT = "WebTest.py"
     }
 
-    agent { label "master" }
-
     stages {
 
         stage('Preparation') {
-        sh '''
+            sh '''
             cd $BASEDIR
             /usr/local/bin/virtualenv -q -p /usr/local/bin/python3 $VENV_NAME
-        '''
+            '''
         }
         stage('Requirements') {
             sh '''
@@ -57,9 +55,7 @@ pipeline {
             sh '''
             cd $BASEDIR
             source ./$VENV_NAME/bin/activate
-
             nosetests ./$FE_TEST_SCRIPT
-
             deactivate
             '''
         }
@@ -67,11 +63,8 @@ pipeline {
             sh '''
             cd $BASEDIR
             source ./$VENV_NAME/bin/activate
-
             for PID in $(ps -eaf | grep 'runserver' | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
-
             deactivate
             '''
         }
     }
-}
