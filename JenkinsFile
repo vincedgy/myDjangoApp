@@ -45,7 +45,7 @@ pipeline {
             deactivate
             '''
         }
-        stage('Run') {
+        stage('Run app') {
             sh '''
             cd $BASEDIR
             source ./$VENV_NAME/bin/activate
@@ -58,17 +58,12 @@ pipeline {
             cd $BASEDIR
             source ./$VENV_NAME/bin/activate
 
-            for PID in $(ps -eaf | grep chromedriver | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
-
-            ./chromedriver &
-            CHROME_DRIVER_PID=$!
-
-            python ./$FE_TEST_SCRIPT
+            nosetests ./$FE_TEST_SCRIPT
 
             deactivate
             '''
         }
-        stage('Stop') {
+        stage('Stop app') {
             sh '''
             cd $BASEDIR
             source ./$VENV_NAME/bin/activate
