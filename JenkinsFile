@@ -1,57 +1,82 @@
 pipeline {
+    // Possible agent configurations - you must have one and only one at the top level.
     agent any
 
-        stages {
+    environment {
+        BASEDIR = "/Users/vincent/Projects/myDjangoApp"
+        VENV_NAME = "mydjangoapp-qa"
+        FE_TEST_SCRIPT = "WebTest.py"
+    }
 
-            stage('Preparation') {
-           sh '''
-            cd /Users/vincent/Projects/myDjangoApp
-            /usr/local/bin/virtualenv -q -p /usr/local/bin/python3 mydjangoapp-qa
-           '''
-       }
-       stage('Requirements') {
+    agent { label "master" }
+
+    stages {
+
+        stage('Preparation') {
+        sh '''
+            cd $BASEDIR
+            /usr/local/bin/virtualenv -q -p /usr/local/bin/python3 $VENV_NAME
+        '''
+        }
+        stage('Requirements') {
             sh '''
-            cd /Users/vincent/Projects/myDjangoApp
-            source ./mydjangoapp-qa/bin/activate
+            cd $BASEDIR
+            source ./$VENV_NAME/bin/activate
             pip install -r requirements.txt
             deactivate
             '''
-       }
-       stage('Build') {
+        }
+        stage('Build') {
             sh '''
-            cd /Users/vincent/Projects/myDjangoApp
-            source ./mydjangoapp-qa/bin/activate
+            cd $BASEDIR
+            source ./$VENV_NAME/bin/activate
             python manage.py makemigrations
             python manage.py migrate                   # Apply database migrations
             #python manage.py compilemessages          # Create translation files
             #python manage.py collectstatic --noinput  # Collect static files
             deactivate
             '''
-       }
-       stage('Tests Polls') {
+        }
+        stage('Tests Polls') {
             sh '''
-            cd /Users/vincent/Projects/myDjangoApp
-            source ./mydjangoapp-qa/bin/activate
+            cd $BASEDIR
+            source ./$VENV_NAME/bin/activate
             python manage.py test --noinput polls     # Run the tests
             deactivate
             '''
-       }
+        }
+        stage('Run') {
+            sh '''
+            cd $BASEDIR
+            source ./$VENV_NAME/bin/activate
+            python manage.py runserver &
+            deactivate
+            '''
+        }
         stage('Tests FrontEnd') {
             sh '''
-            cd /Users/vincent/Projects/myDjangoApp
-            source ./mydjangoapp-qa/bin/activate
+            cd $BASEDIR
+            source ./$VENV_NAME/bin/activate
 
-            for PID in $(ps -eaf | grep chromedriver | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do echo $PID; done
+            for PID in $(ps -eaf | grep chromedriver | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
 
             ./chromedriver &
             CHROME_DRIVER_PID=$!
 
-            python ./WebTest.py
+            python ./$FE_TEST_SCRIPT
 
             deactivate
             '''
-       }
+        }
+        stage('Stop') {
+            sh '''
+            cd $BASEDIR
+            source ./$VENV_NAME/bin/activate
 
+            for PID in $(ps -eaf | grep 'runserver' | grep -v grep | sed 's/  */;/g' | cut -f3 -d';'); do kill $PID; done
 
+            deactivate
+            '''
+        }
     }
 }

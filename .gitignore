@@ -5,3 +5,4 @@ venv*
 !.elasticbeanstalk/*.global.yml
 *.pyc
 .idea
+mydjangoapp-qa/
