@@ -5,4 +5,10 @@ venv*
 !.elasticbeanstalk/*.global.yml
 *.pyc
 .idea
+.idea/*
 mydjangoapp-qa/
+.elasticbeanstalk/
+__pycache__/
+mydjangoapp/__pycache__/
+polls/__pycache__/
+polls/migrations/__pycache__/
