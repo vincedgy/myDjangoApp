@@ -1,5 +1,7 @@
 # myDjangoApp :metal:
 
+[![Build Status](https://travis-ci.org/vincedgy/myDjangoApp.svg?branch=master)](https://travis-ci.org/vincedgy/myDjangoApp)
+
 Python 2.7 & 3.6 (managed through virtualenv)
 
 ## Objectives
